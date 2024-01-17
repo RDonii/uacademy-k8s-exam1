@@ -1,0 +1,1 @@
+{"domain":"flask-app-deployment","endpoint":"/check-ingress","full_path:":"flask-app-deployment/check-ingress"}

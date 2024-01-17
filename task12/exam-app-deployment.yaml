@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: exam-26
+  name: exam-app-deployment
+  labels:
+    app: exam-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: exam-app
+  template:
+    metadata:
+      labels:
+        app: exam-app
+    spec:
+      containers:
+      - name: exam-app
+        image: rdoni/exam-app
+        ports:
+          - containerPort: 5000
+        env:
+        - name: ENVIRONMENT
+          valueFrom:
+            configMapKeyRef:
+              name: info
+              key: env
+        - name: LOG_LEVEL
+          valueFrom:
+            configMapKeyRef:
+              name: info
+              key: log_leveI
+        - name: GRPC_PORT
+          valueFrom:
+            configMapKeyRef:
+              name: info
+              key: grpc_port
+        - name: DB_URI
+          valueFrom:
+            secretKeyRef:
+              name: database
+              key: DB_URI
+        - name: POD_IP
+          valueFrom:
+            fieldRef:
+              fieldPath: status.podIP
